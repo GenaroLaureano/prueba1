@@ -5,6 +5,9 @@
  */
 package arbolbinario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author laure
@@ -25,7 +28,7 @@ public class Arbol {
         } else {
             return actual;
         }
-        
+
         return actual;
     }
 
@@ -35,14 +38,14 @@ public class Arbol {
 
     public Arbol crearArbol() {
         Arbol bt = new Arbol();
-        bt.agregar(1);
-        bt.agregar(2);
-        bt.agregar(3);
         bt.agregar(4);
         bt.agregar(5);
-        bt.agregar(6);
+        bt.agregar(3);
+        bt.agregar(2);
         bt.agregar(7);
+        bt.agregar(6);
         bt.agregar(8);
+        bt.agregar(1);
         return bt;
     }
 
@@ -62,5 +65,70 @@ public class Arbol {
     public void setPrincipal(Node principal) {
         this.principal = principal;
     }
+
+    
+    private int obtenerNivel(Node actual, int valor) {
+        if (valor == actual.getValor()) {
+            return 1;
+        }
+        return valor < actual.getValor() ?  1 + obtenerNivel(actual.getIzquierdo(), valor) : 1 + obtenerNivel(actual.getDerecho(), valor);
+    }
+    
+
+    public List<Integer> obtenerVecinos(int valor){
+        int nivel = obtenerNivel(principal, valor);
+        return recorrerPorNiveles(principal,nivel,valor);
+    }
+    
+    public List<Integer> recorrerPorNiveles(Node arbol,int nivel,int valor){
+        List<Node> cola = new ArrayList<>();
+        List<Node> aux = new ArrayList<>();
+        cola.add(arbol);
+        
+        while(!cola.isEmpty()){
+            Node actual = cola.get(0);
+            cola.remove(0);
+            aux.add(actual);
+            if(actual!=null){
+                cola.add(actual.getIzquierdo());                
+                cola.add(actual.getDerecho());
+            }
+             
+        }
+        
+        
+        int[] valores = obtenerRangoValores(nivel);
+        aux = aux.subList(valores[0], valores[1]);
+        
+        List<Integer> filaNodos = new ArrayList<>();        
+        for(int i=0; i<aux.size(); i++){
+            if(aux.get(i)!=null){
+                if(aux.get(i).getValor()!=valor){
+                    filaNodos.add(aux.get(i).getValor());
+                }
+            }
+        }
+       
+        return filaNodos;
+            
+    }
+    
+    public int[] obtenerRangoValores(int nivel){
+        int a = 0;
+        int b = 1;
+        for(int i=0; i<nivel; i++){
+            if(i!=0){
+                a += (int)Math.pow(2, (i-1));
+                b += (int)Math.pow(2, (i));
+            }
+        }
+        int[] valores = {a,b};
+        return valores;
+    }
+    
+    
+    
+    
+    
 
 }

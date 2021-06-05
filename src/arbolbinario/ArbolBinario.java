@@ -5,6 +5,9 @@
  */
 package arbolbinario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author laure
@@ -18,9 +21,12 @@ public class ArbolBinario {
         Arbol arbol = new Arbol();
         
        Arbol arbolCreado = arbol.crearArbol();
+
        
-       int valor = arbol.profundidad(arbolCreado.getPrincipal());
-        System.out.println(valor);
+        List<Integer> valor = arbolCreado.obtenerVecinos(8);
+        for(Integer v: valor){
+            System.out.println(v);
+        }
     }
     
 }
