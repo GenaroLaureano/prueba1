@@ -23,10 +23,8 @@ public class ArbolBinario {
        Arbol arbolCreado = arbol.crearArbol();
 
        
-        List<Integer> valor = arbolCreado.obtenerVecinos(8);
-        for(Integer v: valor){
-            System.out.println(v);
-        }
+        List<Integer> valor = arbolCreado.recorridoPorAmplitud(arbolCreado.getPrincipal());
+        System.out.println(valor);
     }
     
 }

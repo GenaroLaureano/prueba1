@@ -77,10 +77,10 @@ public class Arbol {
 
     public List<Integer> obtenerVecinos(int valor){
         int nivel = obtenerNivel(principal, valor);
-        return recorrerPorNiveles(principal,nivel,valor);
+        return obtenerNodosVecinos(principal,nivel,valor);
     }
     
-    public List<Integer> recorrerPorNiveles(Node arbol,int nivel,int valor){
+    public List<Node> recorrerPorNiveles(Node arbol){
         List<Node> cola = new ArrayList<>();
         List<Node> aux = new ArrayList<>();
         cola.add(arbol);
@@ -97,7 +97,27 @@ public class Arbol {
         }
         
         
-        int[] valores = obtenerRangoValores(nivel);
+//        int[] valores = obtenerRangoValores(nivel);
+//        aux = aux.subList(valores[0], valores[1]);
+//        
+//        List<Integer> filaNodos = new ArrayList<>();        
+//        for(int i=0; i<aux.size(); i++){
+//            if(aux.get(i)!=null){
+//                if(aux.get(i).getValor()!=valor){
+//                    filaNodos.add(aux.get(i).getValor());
+//                }
+//            }
+//        }
+       
+        return aux;
+            
+    }
+    
+    public List<Integer> obtenerNodosVecinos(Node principal, int nivel, int valor){
+        
+        List<Node> aux = recorrerPorNiveles(principal);
+        
+          int[] valores = obtenerRangoValores(nivel);
         aux = aux.subList(valores[0], valores[1]);
         
         List<Integer> filaNodos = new ArrayList<>();        
@@ -110,8 +130,9 @@ public class Arbol {
         }
        
         return filaNodos;
-            
     }
+    
+    
     
     public int[] obtenerRangoValores(int nivel){
         int a = 0;
@@ -126,6 +147,21 @@ public class Arbol {
         return valores;
     }
     
+    
+    public List<Integer> recorridoPorAmplitud(Node arbol){
+        
+        List<Node> aux = recorrerPorNiveles(principal);
+
+        List<Integer> filaNodos = new ArrayList<>();        
+        for(int i=0; i<aux.size(); i++){
+            if(aux.get(i)!=null){
+                filaNodos.add(aux.get(i).getValor());
+            }
+        }
+       
+        return filaNodos;
+        
+    }
     
     
     
